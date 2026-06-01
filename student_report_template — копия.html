@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Отчёт по комнате — Никита Дробот</title>
+  <style>
+    :root{
+      --bg:#f4f7fc; --card:#ffffff; --text:#18212f; --muted:#5f6b7a; --line:#dde6f0;
+      --primary:#2457d6; --primary2:#4f86ff; --soft:#ecf3ff; --green:#0f766e; --warn:#9a6700;
+      --shadow:0 14px 36px rgba(24,33,47,.10); --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#f7faff 0%, #f2f5fb 100%);line-height:1.58;}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 56px;}
+    .hero{background:linear-gradient(135deg,#1f4ec9 0%, #3a76ff 100%);color:#fff;border-radius:28px;padding:28px 26px;box-shadow:var(--shadow);}
+    .eyebrow{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:14px;}
+    h1{margin:0;font-size:clamp(28px,4vw,42px);line-height:1.08;}
+    .hero p{margin:14px 0 0;max-width:860px;font-size:17px;opacity:.98;}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+    .btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:14px;font-weight:700;transition:.2s ease;border:1px solid transparent;cursor:pointer;}
+    .btn.primary{background:#fff;color:#1f4ec9;}
+    .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.20);}
+    .section{margin-top:18px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid #edf2f8;padding:24px 22px;}
+    .section h2{margin:0 0 10px;font-size:26px;line-height:1.15;}
+    .lead{margin:0 0 14px;color:var(--muted);font-size:16px;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .card{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff;}
+    .card h3{margin:0 0 8px;font-size:19px;}
+    .field, textarea, input[type="text"]{
+      width:100%; border:1px solid var(--line); border-radius:14px; padding:12px 14px;
+      font:inherit; color:var(--text); background:#fff;
+    }
+    textarea{min-height:120px; resize:vertical;}
+    .small{min-height:90px;}
+    .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+    .sum-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;}
+    .sum-card strong{display:block;font-size:14px;color:var(--muted);}
+    .big{font-size:34px;font-weight:800;color:var(--primary);line-height:1;margin-top:8px;}
+    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .ph{
+      border:2px dashed #cfdcf0; border-radius:18px; min-height:220px; display:flex;
+      align-items:center; justify-content:center; color:var(--muted); text-align:center; padding:20px;
+      background:#fbfcfe;
+    }
+    .note{border-radius:18px;padding:16px 18px;border:1px solid #d6ebdf;background:#f1fcf6;}
+    .note strong{color:var(--green);}
+    .footer{margin-top:18px;text-align:center;color:var(--muted);font-size:14px;}
+    @media (max-width:900px){.grid,.summary,.gallery{grid-template-columns:1fr;}}
+    @media print{
+      body{background:#fff}
+      .hero,.section{box-shadow:none}
+      .btn,.nav{display:none !important}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Моя работа</div>
+      <h1>Проверка комнаты в общаге и как её улучшить</h1>
+      <p>Я посмотрел, как устроена моя комната, что в ней удобно, а что бесит, и придумал, как это исправить простыми способами.</p>
+      <div class="nav">
+        <a class="btn primary" href="#">Вернуться назад</a>
+        <button class="btn secondary" onclick="window.print()">Сохранить или напечатать</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>1. Информация</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Автор (ФИО)</h3>
+          <input type="text" id="studentName" class="field" value="Никита Дробот" />
+        </div>
+        <div class="card">
+          <h3>Что проверяем</h3>
+          <input type="text" id="objectName" class="field" value="Комната в общежитии" />
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <h3>Зачем нужна эта комната?</h3>
+        <textarea id="purpose">Это моё основное место для жизни: я здесь сплю, готовлюсь к парам, пишу код и иногда отдыхаю с друзьями.</textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. Результаты в цифрах</h2>
+      <div class="summary">
+        <div class="sum-card"><strong>Мои очки</strong><div class="big" id="sum">45</div></div>
+        <div class="sum-card"><strong>Всего очков</strong><div class="big" id="max">60</div></div>
+        <div class="sum-card"><strong>Насколько всё ок</strong><div class="big" id="percent">75%</div></div>
+        <div class="sum-card"><strong>Итог</strong><div id="interp" style="margin-top:8px; font-weight:700;">Жить можно!</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3. Что я увидел</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Плюсы (что круто)</h3>
+          <textarea id="strengths" class="small">Много света от окна, большой рабочий стол и розетки прямо под рукой. Зимой очень тепло.</textarea>
+        </div>
+        <div class="card">
+          <h3>Минусы (что плохо)</h3>
+          <textarea id="problems" class="small">Мало места в шкафу, скрипит дверь и очень неудобный стул — спина устаёт через час.</textarea>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <h3>Три простых идеи для пользы</h3>
+        <textarea id="improvements">1. Купить подушку на стул. 2. Смазать петли у двери. 3. Повесить пару полок для учебников.</textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>4. План перемен</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Что сделаю бесплатно</h3>
+          <textarea id="noBudget" class="small">Выброшу старый хлам, переставлю стол поближе к свету и приберусь в проводах, чтобы не мешались под ногами.</textarea>
+        </div>
+        <div class="card">
+          <h3>Что нужно купить (недорого)</h3>
+          <textarea id="withBudget" class="small">Нужна яркая настольная лампа, коробки под кровать для вещей и сетевой фильтр подлиннее.</textarea>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <h3>Почему это важно?</h3>
+        <textarea id="justification">Если в комнате будет порядок и удобное место для учёбы, я буду меньше уставать и смогу быстрее делать все дела по университету.</textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5. Фото и схемы</h2>
+      <p class="lead">Сюда я вставлю фотку комнаты сейчас и картинку, как я хочу всё переставить в будущем.</p>
+      <div class="gallery">
+        <div class="ph">Место для фото комнаты</div>
+        <div class="ph">Схема новой перестановки</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>6. Общий вывод</h2>
+      <textarea id="finalConclusion">В целом, в комнате жить можно, но если добавить нормальный свет и чуть-чуть порядка, станет в разы лучше. Мой план поможет сделать её уютнее без больших трат.</textarea>
+      <div class="note" style="margin-top:14px;"><strong>Совет:</strong> уютная комната помогает лучше учиться и меньше нервничать!</div>
+    </section>
+
+    <div class="footer">Никита Дробот, 2026 год. Работа сделана для себя и учёбы.</div>
+  </div>
+</body>
+</html>
