@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Проект ИТ-инфраструктуры и рабочего пространства</title>
+  <style>
+    :root{
+      --bg:#f4f7fc; --card:#ffffff; --text:#18212f; --muted:#5f6b7a; --line:#dde6f0;
+      --primary:#2457d6; --primary2:#4f86ff; --soft:#ecf3ff; --green:#0f766e; --warn:#9a6700;
+      --bad:#b42318; --ink:#0f172a; --shadow:0 14px 36px rgba(24,33,47,.10); --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif; color:var(--text);
+      background:linear-gradient(180deg,#f7faff 0%, #f2f5fb 100%); line-height:1.58;
+    }
+    .wrap{max-width:1140px; margin:0 auto; padding:28px 18px 56px;}
+    .hero{
+      background:linear-gradient(135deg,#1f4ec9 0%, #3a76ff 100%);
+      color:#fff; border-radius:28px; padding:28px 26px; box-shadow:var(--shadow);
+    }
+    .eyebrow{
+      display:inline-block; padding:7px 12px; border-radius:999px;
+      background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.18);
+      font-size:13px; font-weight:700; letter-spacing:.02em; margin-bottom:14px;
+    }
+    h1{margin:0; font-size:clamp(28px,4vw,42px); line-height:1.08;}
+    h2{margin:0 0 10px; font-size:26px; line-height:1.15;}
+    h3{margin:0 0 8px; font-size:19px; line-height:1.22;}
+    .hero p{margin:14px 0 0; max-width:900px; font-size:17px; opacity:.98;}
+    .nav{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+    .btn{
+      text-decoration:none; display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 16px; border-radius:14px; font-weight:700; transition:.2s ease;
+      border:1px solid transparent; cursor:pointer; font:inherit;
+    }
+    .btn.primary{background:#fff; color:#1f4ec9;}
+    .btn.secondary{background:rgba(255,255,255,.12); color:#fff; border-color:rgba(255,255,255,.20);}
+    .btn.action{background:linear-gradient(135deg,#2457d6 0%, #4f86ff 100%); color:#fff; box-shadow:0 10px 24px rgba(36,87,214,.18);}
+    .btn.light{background:#fff; color:var(--primary); border-color:#cfddfb;}
+    .btn.warn{background:#fff9eb; color:#7a4a00; border-color:#f3dfb3;}
+    .btn.danger{background:#fff; color:var(--bad); border-color:#fecaca;}
+    .btn:hover{transform:translateY(-1px);}
+    .section{
+      margin-top:18px; background:var(--card); border-radius:var(--radius);
+      box-shadow:var(--shadow); border:1px solid #edf2f8; padding:24px 22px;
+    }
+    .lead{margin:0 0 14px; color:var(--muted); font-size:16px;}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+    .grid.three{grid-template-columns:repeat(3,1fr);}
+    .card{border:1px solid var(--line); border-radius:18px; padding:16px; background:#fff;}
+    .card p{margin:0; color:var(--muted);}
+    .note{border-radius:18px; padding:16px 18px; border:1px solid #d6ebdf; background:#f1fcf6;}
+    .note strong{color:var(--green);}
+    .warn-box{border-radius:18px; padding:16px 18px; border:1px solid #f3dfb3; background:#fff9eb;}
+    .warn-box strong{color:var(--warn);}
+    .field, textarea, select{
+      width:100%; border:1px solid var(--line); border-radius:14px; padding:12px 14px;
+      font:inherit; color:var(--text); background:#fff;
+    }
+    textarea{min-height:116px; resize:vertical;}
+    .small{min-height:86px;}
+    label.caption{display:block; font-weight:700; margin:0 0 7px;}
+    .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+    .form-grid .wide{grid-column:1 / -1;}
+    .row-list{display:grid; gap:12px;}
+    .dynamic-row{
+      border:1px solid var(--line); border-radius:18px; padding:14px; background:#fff;
+      display:grid; gap:12px;
+    }
+    .row-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .row-title{font-weight:800; color:var(--primary);}
+    .mini-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
+    .two-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    .media-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+    .media-card{border:1px solid var(--line); border-radius:18px; padding:14px; background:#fff;}
+    .media-preview{
+      min-height:190px; border:2px dashed #cfdcf0; border-radius:16px; background:#fbfcfe;
+      display:flex; align-items:center; justify-content:center; text-align:center; color:var(--muted);
+      overflow:hidden; padding:12px; margin:8px 0 12px;
+    }
+    .media-preview img{width:100%; height:100%; max-height:260px; object-fit:cover; border-radius:12px; display:block;}
+    .check-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+    .check-card{border:1px solid var(--line); border-radius:18px; padding:14px; background:#fff;}
+    .check-card h3{font-size:18px;}
+    .check-item{display:flex; gap:9px; align-items:flex-start; padding:8px 0; border-top:1px dashed #e7edf5;}
+    .check-item:first-of-type{border-top:0;}
+    .check-item input{margin-top:5px;}
+    .score-bar{height:12px; border-radius:999px; background:#e8eef8; overflow:hidden;}
+    .score-fill{height:100%; width:0%; background:linear-gradient(90deg,#0f766e 0%, #4f86ff 100%); transition:.2s ease;}
+    .summary{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px;}
+    .sum-card{background:#fff; border:1px solid var(--line); border-radius:18px; padding:16px;}
+    .sum-card strong{display:block; font-size:14px; color:var(--muted);}
+    .big{font-size:34px; font-weight:800; color:var(--primary); line-height:1; margin-top:8px;}
+    .pill{
+      display:inline-block; background:#eef4ff; color:#2457d6; padding:6px 10px;
+      border-radius:999px; font-size:13px; font-weight:700; margin:0 8px 8px 0;
+    }
+    .steps{display:grid; gap:12px;}
+    .step{
+      display:grid; grid-template-columns:52px 1fr; gap:14px; align-items:flex-start;
+      border:1px solid var(--line); border-radius:18px; padding:14px;
+    }
+    .num{
+      width:52px; height:52px; border-radius:16px; background:var(--soft); color:var(--primary);
+      display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800;
+    }
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+    .footer{margin-top:18px; text-align:center; color:var(--muted); font-size:14px;}
+    @media (max-width:960px){
+      .grid,.grid.three,.form-grid,.mini-grid,.two-grid,.media-grid,.check-grid,.summary{grid-template-columns:1fr;}
+      .form-grid .wide{grid-column:auto;}
+    }
+    @media print{
+      body{background:#fff}
+      .hero,.section{box-shadow:none}
+      .nav,.actions,.remove-btn,.file-input{display:none !important}
+      .section{break-inside:avoid}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Проектное задание</div>
+      <h1>Закупка оборудования, ИТ-инфраструктура и организация рабочего пространства</h1>
+      <p>Выберите реальную аудиторию, зону института или организацию. Проведите аудит, подтвердите выводы фотографиями, подготовьте смету и соберите собственный проект.</p>
+      <div class="nav">
+        <a class="btn primary" href="index.html">Главная страница</a>
+        <a class="btn secondary" href="#">Базовый чек-лист</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>1. Паспорт проекта</h2>
+      <div class="form-grid">
+        <div class="wide">
+          <label class="caption" for="projectTitle">Название проекта</label>
+          <input class="field" id="projectTitle" type="text" value="Создание зоны для разминки и спорта, для студентов ТИ" placeholder="Создание зоны для разминки и спорта, для студентов ТИ" />
+        </div>
+        <div>
+          <label class="caption" for="objectType">Тип объекта</label>
+          <select id="objectType">
+            <option value="">Выберите тип</option>
+            <option selected>территория вуза</option>
+            <option>Учебная аудитория</option>
+            <option>Компьютерный класс</option>
+            <option>Серверный узел</option>
+            <option>Офисное пространство</option>
+          </select>
+        </div>
+        <div>
+          <label class="caption" for="roomNumber">Локация</label>
+          <input class="field" id="roomNumber" type="text" value="участок улицы возле аудитории 6116" placeholder="участок улицы возле аудитории 6116" />
+        </div>
+        <div class="wide">
+          <label class="caption" for="projectGoal">Цель улучшения</label>
+          <textarea id="projectGoal" placeholder="Создание зоны с брусьями, турниками, для студентов...">Создание зоны с брусьями, турниками, для студентов, чтобы разминаться после 1,5 часов за компьютером или за партой, поможет улучшить физическое состояние студентов и отвлечёт их от учёбы, для дальнейшей концентрации на процессе обучения</textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. Команда и обязанности</h2>
+      <div id="teamList" class="row-list"></div>
+      <div class="actions">
+        <button class="btn action" id="addMemberBtn" type="button">+ Добавить участника</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>4. Полевой аудит и реальные фотографии</h2>
+      <div id="photoList" class="media-grid"></div>
+      <div class="actions">
+        <button class="btn action" id="addPhotoBtn" type="button">+ Добавить фото</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5. Проект закупки оборудования</h2>
+      <div id="equipmentList" class="row-list"></div>
+      <div class="actions">
+        <button class="btn action" id="addEquipmentBtn" type="button">+ Добавить позицию</button>
+      </div>
+      <div style="margin-top:14px;">
+        <label class="caption" for="tco">Стоимость владения (TCO)</label>
+        <textarea id="tco" placeholder="Объясните логику затрат и обслуживания...">Сразу тратим деньги на сам комплекс, доставку и установку с бетонированием. Потом расходов почти нет — только раз в год проверять, чтобы ничего не разболталось, мыть навес после зимы и подкрашивать трубы раз в пару лет, чтобы не заржавели.</textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>6. Эргономика и infrastructure</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Рабочие места / Спортивные снаряды</h3>
+          <textarea id="workplaceErgo" class="small" placeholder="Стол, кресло, свет...">Высоту турников подбираем под средний рост парней и девушек, чтобы можно было нормально допрыгнуть. Брусья делаем стандартной ширины, чтобы не вывернуть плечи. Скамью для пресса ставим под небольшим наклоном, чтобы спина не затекала. Навес закроет от солнца в жару и от дождя, если погода испортится.</textarea>
+        </div>
+        <div class="card">
+          <h3>Сеть и инфраструктура</h3>
+          <textarea id="serverNode" class="small" placeholder="Wi-Fi, розетки, шкаф...">Тут ловит институтский вайфай, так что можно будет заниматься под музыку с телефона. Для слива воды с навеса сделаем стоки по краям опор, чтобы на площадке не стояли лужи. Рядом поставим простую деревянную стойку с крючками, чтобы студенты могли кинуть туда рюкзаки и куртки на время тренировки.</textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>7. AI-визуализации будущего</h2>
+      <div id="visualList" class="media-grid"></div>
+      <div class="actions">
+        <button class="btn action" id="addVisualBtn" type="button">+ Добавить визуализацию</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>8. Чек-лист готовности</h2>
+      <div class="summary">
+        <div class="sum-card"><strong>Закрыто</strong><div class="big" id="doneCount">0</div></div>
+        <div class="sum-card"><strong>Всего</strong><div class="big" id="totalCount">0</div></div>
+        <div class="sum-card"><strong>Готовность</strong><div class="big" id="readyPercent">0%</div></div>
+        <div class="sum-card"><strong>Статус</strong><div id="readyStatus" style="font-weight:800; margin-top:8px;">Заполнение...</div></div>
+      </div>
+      <div class="score-bar" style="margin-top:12px;"><div class="score-fill" id="scoreFill"></div></div>
+      <div id="qualityChecklist" class="check-grid" style="margin-top:14px;"></div>
+    </section>
+
+    <section class="section">
+      <h2>10. Итоговые выводы</h2>
+      <textarea id="finalConclusion" placeholder="Финальное резюме проекта...">Если сделать эту площадку вместо старого разбитого асфальта у 6116 аудитории, у студентов появится нормальное место для отдыха между парами. Комплекс с навесом и резиновым покрытием прослужит долго, стоит адекватно и поможет всем размяться после долгого сидения за компами.</textarea>
+      <div class="actions">
+        <button class="btn action" id="saveBtn">Сохранить черновик</button>
+        <button class="btn light" onclick="window.print()">Печать / PDF</button>
+        <button class="btn warn" id="clearBtn">Очистить всё</button>
+      </div>
+    </section>
+
+    <div class="footer">СПбГТИ(ТУ) | 2026</div>
+  </div>
+
+<script>
+const storageKey = 'itInfrastructureDraft';
+
+let state = {
+  team:[
+    {
+      name:'Дробот Никита', 
+      role:'Руководитель проекта', 
+      conclusion:'Спина болит, надо построить спорт площадку.'
+    },
+    {
+      name:'Ерошкин Артём', 
+      role:'Технический специалист', 
+      conclusion:'Классное место выбрали, можно прям из аудитории сразу на площадку попасть.'
+    },
+    {
+      name:'Шушков Алексей', 
+      role:'Финансовый контролер', 
+      conclusion:'И не дорого такое внедрить.'
+    }
+  ],
+  equipment:[
+    {name:'Спортивный комплекс с навесом (турники, брусья, кольца)', price:'145000', qty:'1', reason:'Сам каркас площадки, где все будут подтягиваться и отжиматься. Навес защитит от дождя.'},
+    {name:'Резиновая плитка для покрытия (500х500 мм)', price:'1800', qty:'36', reason:'Чтобы стелить на землю. Ноги не будут скользить, и падать не больно.'},
+    {name:'Уличная наклонная скамья для пресса', price:'18500', qty:'1', reason:'Дополнительный тренажер, чтобы поделать пресс и размять спину.'},
+    {name:'Деревянная стойка с крючками для вещей', price:'8500', qty:'1', reason:'Чтобы вешать куртки и ставить рюкзаки на время тренировки, а не кидать их на землю.'},
+    {name:'Расходники для монтажа (цемент, крепеж, смесь)', price:'15000', qty:'1', reason:'Нужно, чтобы намертво забетонировать столбы в землю для безопасности.'}
+  ],
+  photos:[
+    {
+      path:'Выйти с факультета фэма и повернуть налево, пройти чуть вперед и будет площадка спортивная', 
+      caption:'Как место выглядит сейчас: просто старый серый асфальт, территория никак не используется.'
+    }
+  ],
+  visuals:[
+    {
+      path:'Выйти с факультета фэма и повернуть налево, пройти чуть вперед и будет площадка спортивная', 
+      caption:'Как площадка будет выглядеть: готовый воркаут-городок с синим резиновым полом, навесом и скамейкой.'
+    }
+  ],
+  checklist:{0:true, 1:true, 2:true, 3:true, 4:true, 5:true}
+};
+
+function byId(id){ return document.getElementById(id); }
+
+function renderTeam(){
+  const list = byId('teamList');
+  list.innerHTML = '';
+  state.team.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.className = 'dynamic-row';
+    div.innerHTML = `
+      <div class="row-head"><strong>Участник ${i+1}</strong> <button class="btn danger remove-btn" onclick="remove('team', ${i})">Удалить</button></div>
+      <div class="two-grid">
+        <input class="field" placeholder="ФИО" value="${m.name}" oninput="state.team[${i}].name=this.value">
+        <input class="field" placeholder="Роль" value="${m.role}" oninput="state.team[${i}].role=this.value">
+      </div>
+      <textarea class="small" placeholder="Личный вывод" oninput="state.team[${i}].conclusion=this.value">${m.conclusion}</textarea>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function renderEquipment(){
+  const list = byId('equipmentList');
+  list.innerHTML = '';
+  state.equipment.forEach((e, i) => {
+    const div = document.createElement('div');
+    div.className = 'dynamic-row';
+    div.innerHTML = `
+      <div class="row-head"><strong>Позиция ${i+1}</strong> <button class="btn danger remove-btn" onclick="remove('equipment', ${i})">Удалить</button></div>
+      <div class="mini-grid">
+        <input class="field" placeholder="Название" value="${e.name}" oninput="state.equipment[${i}].name=this.value">
+        <input class="field" placeholder="Цена" value="${e.price}" oninput="state.equipment[${i}].price=this.value; updateStats();">
+        <input class="field" placeholder="Кол-во" value="${e.qty}" oninput="state.equipment[${i}].qty=this.value; updateStats();">
+      </div>
+      <textarea class="small" placeholder="Обоснование" oninput="state.equipment[${i}].reason=this.value">${e.reason}</textarea>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function renderPhotos(){
+  const list = byId('photoList');
+  list.innerHTML = '';
+  state.photos.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'media-card';
+    div.innerHTML = `
+      <div class="row-head"><strong>Фото аудитории ${i+1}</strong> <button class="btn danger remove-btn" onclick="remove('photos', ${i})">Удалить</button></div>
+      <div class="media-preview"><img src="https://i.ibb.co/8Q53q6s/image.jpg" alt="До модернизации"></div>
+      <input class="field" placeholder="Путь" value="${p.path}" oninput="state.photos[${i}].path=this.value">
+      <input class="field" placeholder="Описание" value="${p.caption}" oninput="state.photos[${i}].caption=this.value">
+    `;
+    list.appendChild(div);
+  });
+}
+
+function renderVisuals(){
+  const list = byId('visualList');
+  list.innerHTML = '';
+  state.visuals.forEach((v, i) => {
+    const div = document.createElement('div');
+    div.className = 'media-card';
+    div.innerHTML = `
+      <div class="row-head"><strong>Визуализация ${i+1}</strong> <button class="btn danger remove-btn" onclick="remove('visuals', ${i})">Удалить</button></div>
+      <div class="media-preview"><img src="https://i.ibb.co/zw4C3Z2/image.jpg" alt="После модернизации"></div>
+      <input class="field" placeholder="Путь к картинке" value="${v.path}" oninput="state.visuals[${i}].path=this.value">
+      <textarea class="small" placeholder="Описание" oninput="state.visuals[${i}].caption=this.value">${v.caption || ''}</textarea>
+    `;
+    list.appendChild(div);
+  });
+}
+
+const checkItems = ["Выбран объект", "Есть фото", "Смета готова", "Эргономика описана", "AI-визуалы есть", "Сайт опубликован"];
+function renderChecklist(){
+  const list = byId('qualityChecklist');
+  list.innerHTML = '';
+  checkItems.forEach((item, i) => {
+    const checked = state.checklist[i] ? 'checked' : '';
+    list.innerHTML += `<label class="check-item"><input type="checkbox" ${checked} onchange="toggleCheck(${i})"> ${item}</label>`;
+  });
+  updateStats();
+}
+
+function toggleCheck(i){ state.checklist[i] = !state.checklist[i]; updateStats(); }
+function updateStats(){
+  const total = checkItems.length;
+  const done = Object.values(state.checklist).filter(Boolean).length;
+  const perc = Math.round((done/total)*100);
+  byId('doneCount').innerText = done;
+  byId('totalCount').innerText = total;
+  byId('readyPercent').innerText = perc + '%';
+  byId('scoreFill').style.width = perc + '%';
+  
+  if(perc === 100) {
+    byId('readyStatus').innerText = "Готов!";
+    byId('readyStatus').style.color = "var(--green)";
+  } else {
+    byId('readyStatus').innerText = "Заполнение...";
+    byId('readyStatus').style.color = "var(--warn)";
+  }
+}
+
+function remove(key, i){ state[key].splice(i,1); refresh(); }
+function refresh(){ renderTeam(); renderEquipment(); renderPhotos(); renderVisuals(); renderChecklist(); }
+
+byId('addMemberBtn').onclick = () => { state.team.push({name:'', role:'', conclusion:''}); renderTeam(); };
+byId('addEquipmentBtn').onclick = () => { state.equipment.push({name:'', price:'', qty:'', reason:''}); renderEquipment(); };
+byId('addPhotoBtn').onclick = () => { state.photos.push({path:'', caption:''}); renderPhotos(); };
+byId('addVisualBtn').onclick = () => { state.visuals.push({path:'', caption:''}); renderVisuals(); };
+
+byId('saveBtn').onclick = () => { localStorage.setItem(storageKey, JSON.stringify(state)); alert('Сохранено!'); };
+byId('clearBtn').onclick = () => { if(confirm('Очистить?')){ localStorage.removeItem(storageKey); location.reload(); }};
+
+window.onload = () => {
+  const saved = localStorage.getItem(storageKey);
+  if(saved) state = JSON.parse(saved);
+  refresh();
+};
+</script>
+</body>
+</html>
